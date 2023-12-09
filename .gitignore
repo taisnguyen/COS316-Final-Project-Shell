@@ -1,0 +1,14 @@
+# Byte-compiled / DLL
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Shell config file
+shell.config 
