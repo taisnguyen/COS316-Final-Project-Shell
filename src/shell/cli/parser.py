@@ -2,8 +2,11 @@
 
 import os
 import subprocess
+import psutil
 
+from shell.utils.ansi_colors import ANSIColors
 from shell.exceptions import ConfigurationError, CommandNotExistsError
+from shell.process_manager.spawner import spawn_process
 
 
 def exec_command(line, exec_bin_path):
@@ -12,11 +15,7 @@ def exec_command(line, exec_bin_path):
             f"The EXEC_BIN_PATH '{exec_bin_path}' does not exist.")
 
     try:
-        cwd = os.getcwd()
-        os.chdir(exec_bin_path)
-        subprocess.Popen(line)
-        os.chdir(cwd)
-    except Exception:
+        spawn_process(line, exec_bin_path)
+    except Exception as err:
+        print(err)
         raise CommandNotExistsError()
-
-    pass
