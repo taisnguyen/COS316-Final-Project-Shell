@@ -23,8 +23,7 @@ def spawn_process(args, exec_bin_path):
             run_in_background = True
             args = args[:-1]
 
-        CURRENT_S_PROCESS = subprocess.Popen(
-            [os.path.join(exec_bin_path, args[0]), *args[1:]])
+        CURRENT_S_PROCESS = subprocess.Popen([os.path.join(exec_bin_path, args[0]), *args[1:]])
 
         # Stall until process is finished if not running in background.
         while not run_in_background and CURRENT_S_PROCESS.poll() is None:
@@ -32,7 +31,6 @@ def spawn_process(args, exec_bin_path):
 
     except KeyboardInterrupt:
         psutil.Process(CURRENT_S_PROCESS.pid).suspend()
-        print(
-            f'Process [{CURRENT_S_PROCESS.pid}] suspended. To resume, run "prs {CURRENT_S_PROCESS.pid}".')
+        print(f'Process [{CURRENT_S_PROCESS.pid}] suspended. To resume, run "prs {CURRENT_S_PROCESS.pid}".')
     except:
         raise

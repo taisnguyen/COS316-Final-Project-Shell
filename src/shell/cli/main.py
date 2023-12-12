@@ -41,8 +41,7 @@ class Shell(cmd.Cmd):
 
         # Otherwise, attempt to find binaries in provided EXEC_BIN_PATH.
         try:
-            exec_command(
-                line, self.config["EXEC_BIN_PATH"])
+            exec_command(line, self.config["EXEC_BIN_PATH"])
         except ConfigurationError as err:
             sys.exit(f"{ANSIColors.FAIL}Terminating... {str(err)} \nPlease delete the current configuration file and rerun the Shell to recreate.{ANSIColors.ENDC}")
         except CommandNotExistsError:
