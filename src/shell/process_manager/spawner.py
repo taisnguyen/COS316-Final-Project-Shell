@@ -12,7 +12,6 @@ def spawn_process(args, exec_bin_path):
 
     # Keep track of current subprocess.
     current_s_process = None
-    print("args", args)
 
     try:
         run_in_background = False
