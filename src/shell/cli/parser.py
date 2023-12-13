@@ -1,6 +1,8 @@
-'''Contains code for CLI parser.'''
+'''Contains code for CLI parser responsible for parsing commands/redirection/pipes and executing them.'''
 
 import os
+import asyncio
+import re
 import subprocess
 import psutil
 
@@ -10,12 +12,12 @@ from shell.process_manager.spawner import spawn_process
 
 
 def exec_command(line, exec_bin_path):
-    if not os.path.exists(exec_bin_path):
-        raise ConfigurationError(
-            f"The EXEC_BIN_PATH '{exec_bin_path}' does not exist.")
+    # cmd_groups_to_process = line.split("|")
 
     try:
         spawn_process(line, exec_bin_path)
+        # iterate through cmd_groups_to_process: pass in
+        # Promises JS -> Futures Python
     except Exception as err:
         print(err)
         raise CommandNotExistsError()

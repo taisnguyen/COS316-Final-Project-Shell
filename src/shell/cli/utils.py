@@ -29,17 +29,17 @@ def setup_config():
 
     try:
         with open(CONFIG_FILE_PATH, "w") as config_file:
-            print("# SHELL CONFIGURATION")
-            config_file.write("# SHELL CONFIGURATION\n")
-
-            # print(f"ENCODING={sys.stdout.encoding}")
-            # config_file.write(f"ENCODING={sys.stdout.encoding}\n")
+            print("# SHELL CONFIGURATION\n")
+            config_file.write("# SHELL CONFIGURATION\n\n")
 
             # Directory for executable binaries.
+            print("# Split paths with ';' for multiple paths.")
+            config_file.write("# Split paths with ';' for multiple paths.\n")
             config_file.write(f"EXEC_BIN_PATH={input('EXEC_BIN_PATH=')}\n")
 
         with open(CONFIG_FILE_PATH, "r") as config_file:
             return _parse_config_file(config_file)
+
     except KeyboardInterrupt:
         os.remove(CONFIG_FILE_PATH)
         sys.exit(
@@ -51,10 +51,11 @@ def setup_config():
 def _parse_config_file(config_file):
     config_dict = {}
     for line in config_file:
-        if line.startswith("#"):
+        if line.startswith("#") or line.strip() == "":
             continue
 
         key, value = line.split("=")
         config_dict[key] = value.strip()
 
+    print(config_dict)
     return config_dict

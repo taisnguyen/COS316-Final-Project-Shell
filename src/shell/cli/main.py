@@ -43,6 +43,7 @@ class Shell(cmd.Cmd):
         try:
             exec_command(
                 line, self.config["EXEC_BIN_PATH"])
+        # Could put a higher level, but this is fine for now.
         except ConfigurationError as err:
             sys.exit(f"{ANSIColors.FAIL}Terminating... {str(err)} \nPlease delete the current configuration file and rerun the Shell to recreate.{ANSIColors.ENDC}")
         except CommandNotExistsError:
@@ -50,9 +51,15 @@ class Shell(cmd.Cmd):
 
         return line
 
+    def postcmd(self, stop, line):
+        self.prompt = f"{os.getcwd()} $ "
+
     def _cmd_not_exists(self, cmd):
         print(
             f"{ANSIColors.FAIL}The term '{cmd}' is not recognized as a command. Please check the spelling or make sure that EXEC_BIN_PATH is set properly.{ANSIColors.ENDC}\n")
+
+    def do_exit(self, line):
+        sys.exit(0)
 
     # Here we are just overriding parent class default in favor of _cmd_not_exists.
     def default(self, line):
@@ -61,9 +68,6 @@ class Shell(cmd.Cmd):
     # Similarly, in favor of help command in shell.commands.
     def do_help(self, line):
         pass
-
-    def do_exit(self, line):
-        sys.exit(0)
 
 
 def main():

@@ -7,9 +7,11 @@ from shell.commands.process_list import ProcessList
 from shell.commands.process_suspend import ProcessSuspend
 from shell.commands.process_resume import ProcessResume
 from shell.commands.process_kill import ProcessKill
+from shell.commands.change_directory import ChangeDirectory
 
 # Here, we populate commands_list with all commands other than the help command.
-commands_list = [ProcessList, ProcessSuspend, ProcessResume, ProcessKill]
+commands_list = [ProcessList, ProcessSuspend,
+                 ProcessResume, ProcessKill, ChangeDirectory]
 
 
 def get_command_if_exists(commands, cmd):
