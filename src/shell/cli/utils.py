@@ -13,6 +13,7 @@ CONFIG_FILE_PATH = "shell.config"
 def setup_config():
     """Sets up config file for CLI."""
 
+    # Try to get the config file
     try:
         with open(CONFIG_FILE_PATH, "r") as config_file:
             # Config file already exists.
@@ -22,10 +23,12 @@ def setup_config():
     except Exception as err:
         raise ConfigurationError(err)
 
+    # Prompt to create a config file
+    no_config_file_handler = lambda: sys.exit(f"{ANSIColors.FAIL}Terminating... No configuration file identified.{ANSIColors.ENDC}")
     input_options("It looks like there doesn't exist a configuration file for the Shell.\nWould you like to create one?", {
         "Y": None,
-        "n": lambda: sys.exit(f"{ANSIColors.FAIL}Terminating... No configuration file identified.{ANSIColors.ENDC}")
-    }, default_handler=lambda: sys.exit(f"{ANSIColors.FAIL}Terminating... No configuration file identified.{ANSIColors.ENDC}"))
+        "n": no_config_file_handler
+    }, default_handler=no_config_file_handler)
 
     try:
         with open(CONFIG_FILE_PATH, "w") as config_file:
