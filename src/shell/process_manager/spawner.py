@@ -7,21 +7,13 @@ import psutil
 import shlex
 
 
-def spawn_process(args, exec_bin_path, stdout=None, stdin=None):
+def spawn_process(args, exec_bin_path, stdout=None, stdin=None, run_in_background=False):
     """Spawns a process with the given arguments."""
 
     # Keep track of current subprocess.
     current_s_process = None
 
     try:
-        run_in_background = False
-        args = shlex.split(args)
-
-        # Run process in background
-        if args[-1] == "&":
-            run_in_background = True
-            args = args[:-1]
-
         # Try to start a process for each path to find the first valid one
         bin_paths = exec_bin_path.split(";")
         succeeded = False
