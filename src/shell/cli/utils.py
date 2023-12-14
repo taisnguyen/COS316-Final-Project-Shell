@@ -60,5 +60,4 @@ def _parse_config_file(config_file):
         key, value = line.split("=")
         config_dict[key] = value.strip()
 
-    print(config_dict)
     return config_dict

@@ -11,7 +11,7 @@ from shell.commands import get_command_if_exists
 
 
 class Shell(cmd.Cmd):
-    prompt = f"{os.getcwd()} $ "
+    prompt = f"{ANSIColors.OKGREEN}{os.getcwd()}{ANSIColors.ENDC} $ "
 
     def __init__(self, config):
         cmd.Cmd.__init__(self)
@@ -51,7 +51,7 @@ class Shell(cmd.Cmd):
         return line
 
     def postcmd(self, stop, line):
-        self.prompt = f"{os.getcwd()} $ "
+        self.prompt = f"{ANSIColors.OKGREEN}{os.getcwd()}{ANSIColors.ENDC} $ "
 
     def _cmd_not_exists(self, cmd):
         print(

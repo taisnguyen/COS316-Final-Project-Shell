@@ -1,10 +1,6 @@
 '''Contains code for CLI parser responsible for parsing commands/redirection/pipes and executing them.'''
 
-import os
-import asyncio
-import re
 import subprocess
-import psutil
 import shlex
 
 from shell.utils.ansi_colors import ANSIColors
