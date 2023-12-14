@@ -7,7 +7,7 @@ import psutil
 import shlex
 
 
-def spawn_process(args, exec_bin_path):
+def spawn_process(args, exec_bin_path, stdout=None, stdin=None):
     """Spawns a process with the given arguments."""
 
     # Keep track of current subprocess.
@@ -29,7 +29,7 @@ def spawn_process(args, exec_bin_path):
         for path in bin_paths:
             try:
                 current_s_process = subprocess.Popen(
-                    [os.path.join(path, args[0]), *args[1:]])
+                    [os.path.join(path, args[0]), *args[1:]], stdout=stdout, stdin=stdin)
                 succeeded = True
                 break
             except Exception as err:
@@ -43,6 +43,9 @@ def spawn_process(args, exec_bin_path):
         # Stall until process is finished if not running in background.
         while not run_in_background and current_s_process.poll() is None:
             pass
+        
+        # Return the stdout to allow for piping
+        return current_s_process.stdout
 
     except KeyboardInterrupt:
         psutil.Process(current_s_process.pid).suspend()
