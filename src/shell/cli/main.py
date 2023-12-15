@@ -78,10 +78,12 @@ def main():
     print("COS316 Shell 1.0.0 (by Tai Sanh Nguyen and Spencer Doyle).")
     print('Type "help" for more information.')
 
+    shell = Shell(config)
+
     # Start Shell.
     while True:
         try:
-            Shell(config).cmdloop()
+            shell.cmdloop()
         except KeyboardInterrupt:
             print('\nIf you want to exit, type "exit".')
     # pass
