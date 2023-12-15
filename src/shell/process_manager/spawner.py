@@ -3,6 +3,7 @@
 import os
 import subprocess
 import psutil
+import glob
 
 
 def spawn_process(args, exec_bin_path, stdout=None, stdin=None, run_in_background=False):
@@ -12,9 +13,25 @@ def spawn_process(args, exec_bin_path, stdout=None, stdin=None, run_in_backgroun
     current_s_process = None
 
     try:
-        # Expand tildes in the args
+        # Expand tildes first
         for i in range(1, len(args)):
             args[i] = os.path.expanduser(args[i])
+        
+        # Copy the executable name
+        modified_args = [args[0]]
+
+        # Try to do globbing
+        for i in range(1, len(args)):
+            glob_args = glob.glob(args[i])
+
+            # If globbing succeeded, add each file path to the args
+            if len(glob_args) != 0:
+                modified_args.extend(glob_args)
+            # If failed, just leave it as is
+            else:
+                modified_args.append(args[i])
+        
+        args = modified_args
 
         # Try to start a process for each path to find the first valid one
         bin_paths = exec_bin_path.split(";")
