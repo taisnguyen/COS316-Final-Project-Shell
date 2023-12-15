@@ -12,6 +12,10 @@ def spawn_process(args, exec_bin_path, stdout=None, stdin=None, run_in_backgroun
     current_s_process = None
 
     try:
+        # Expand tildes in the args
+        for i in range(1, len(args)):
+            args[i] = os.path.expanduser(args[i])
+
         # Try to start a process for each path to find the first valid one
         bin_paths = exec_bin_path.split(";")
         succeeded = False
