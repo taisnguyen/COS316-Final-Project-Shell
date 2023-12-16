@@ -6,7 +6,7 @@ import cmd
 from shell.cli.parser import exec_command
 from shell.cli.utils import setup_config
 from shell.utils.ansi_colors import ANSIColors
-from shell.exceptions import ConfigurationError, CommandNotExistsError
+from shell.exceptions import ConfigurationError, CommandNotExistsError, RedirectionSyntaxError
 from shell.commands import get_command_if_exists
 
 
@@ -47,6 +47,11 @@ class Shell(cmd.Cmd):
             sys.exit(f"{ANSIColors.FAIL}Terminating... {str(err)} \nPlease delete the current configuration file and rerun the Shell to recreate.{ANSIColors.ENDC}")
         except CommandNotExistsError:
             self._cmd_not_exists(line.split(" ")[0])
+        except FileNotFoundError:
+            print(f"{ANSIColors.FAIL}File not found.{ANSIColors.ENDC}")
+        except RedirectionSyntaxError:
+            print(f"{ANSIColors.FAIL}Redirection syntax error.{ANSIColors.ENDC}")
+
 
         return line
 

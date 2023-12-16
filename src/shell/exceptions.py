@@ -11,3 +11,6 @@ class ConfigurationError(ShellException):
 
 class CommandNotExistsError(ShellException):
     """Command does not exist exception."""
+
+class RedirectionSyntaxError(ShellException):
+    """Redirection syntax error exception."""
