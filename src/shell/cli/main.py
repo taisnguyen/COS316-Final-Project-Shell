@@ -2,12 +2,13 @@
 import os
 import sys
 import cmd
+from typing import Any
 
 from shell.cli.parser import exec_command
 from shell.cli.utils import setup_config
 from shell.utils.ansi_colors import ANSIColors
 from shell.exceptions import ConfigurationError, CommandNotExistsError, RedirectionSyntaxError
-from shell.commands import get_command_if_exists
+from shell.commands import get_command_if_exists, commands_list
 
 
 class Shell(cmd.Cmd):
@@ -72,6 +73,22 @@ class Shell(cmd.Cmd):
     # Similarly, in favor of help command in shell.commands.
     def do_help(self, line):
         pass
+
+    def completenames(self, text: str, *ignored: Any):
+
+        # Get built in commands
+        commands = [cmd.alias for cmd in commands_list if cmd.alias.startswith(text)]
+
+        # Get do_<command> commands
+        dotext = 'do_'+text
+        commands.extend([a[3:] for a in self.get_names() if a.startswith(dotext)])
+
+        # Get commands in EXEC_BIN_PATH
+        bin_paths = self.config["EXEC_BIN_PATH"].split(";")
+        for path in bin_paths:
+            commands.extend([filename for filename in os.listdir(path) if filename.startswith(text) and os.path.isfile(os.path.join(path, filename))])
+
+        return commands
 
 
 def main():
