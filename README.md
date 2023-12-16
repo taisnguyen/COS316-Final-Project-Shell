@@ -12,16 +12,16 @@ git clone https://github.com/taisnguyen/COS316-Final-Project-Shell.git
 
 First head into the `src` subdirectory, then run
 
-### `python -m virtualenv env`
+`python -m virtualenv env`
 
 to create a virtual environment named `env`. Then activate it by running
 
-### `./env/Scripts/activate`
+`./env/Scripts/activate`
 
 Now, install the dependencies by running
 
-### `pip install < requirements.txt`
+`pip install -r requirements.txt`
 
 Finally, you can start the Shell by running
 
-### `python -m shell`
+`python -m shell`
